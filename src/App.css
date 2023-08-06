@@ -1,0 +1,41 @@
+.slider {
+	color: red;
+	width: 300px;
+}
+
+.slider:hover {
+	color: #2e8b57;
+}
+
+.slider .MuiSlider-thumb {
+	border-radius: 2px;
+}
+
+.btn {
+	background-color: blueviolet;
+	color: white;
+	width: 200px;
+	border-radius: 1rem;
+	margin-left: 10px;
+}
+
+.form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.box {
+	display: flex;
+	border: 2px dashed grey;
+	border-radius: 0.5rem;
+	min-width: 300px;
+	min-height: 50vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.stack {
+	/* border: 2px solid red; */
+}
