@@ -7,6 +7,7 @@ export default function Form() {
 		handleSubmit,
 		control,
 		formState: { errors },
+		getValues,
 	} = useForm({
 		defaultValues: {
 			fullName: "",
@@ -15,6 +16,10 @@ export default function Form() {
 			phoneNumber: [{ number: "" }], //default number of field for phone
 		},
 	});
+
+	function handleGetValue() {
+		console.log("Get Values", getValues("phoneNumber"));
+	}
 
 	const { fields, append, remove } = useFieldArray({
 		name: "phoneNumbers",
@@ -103,6 +108,14 @@ export default function Form() {
 						type="submit"
 					>
 						Sign Up
+					</Button>
+					<Button
+						variant="contained"
+						sx={{ bgcolor: "secondary.dark" }}
+						type="button"
+						onClick={handleGetValue}
+					>
+						Get Value
 					</Button>
 				</Stack>
 			</Box>
