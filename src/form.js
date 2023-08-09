@@ -1,17 +1,24 @@
 import { Box, Button, Container, Stack, TextField } from "@mui/material";
-import { appendErrors, useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 
 export default function Form() {
 	const {
 		register,
 		handleSubmit,
+		control,
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
 			fullName: "",
 			email: "",
 			password: "",
+			phoneNumber: [{ number: "" }], //default number of field for phone
 		},
+	});
+
+	const { fields, append, remove } = useFieldArray({
+		name: "phoneNumbers",
+		control,
 	});
 
 	// console.log("isValid", isValid);
@@ -64,6 +71,32 @@ export default function Form() {
 						{errors.password?.type === "required" &&
 							"Your Password is required"}
 					</p>
+					<div>
+						{fields.map((field, index) => (
+							<div key={field.id}>
+								<TextField
+									{...register(`phoneNumber.${index}.number`, {
+										required: true,
+									})}
+									className="Textfield"
+									id="outlined-basic"
+									label="Phone"
+									variant="outlined"
+								/>
+								<p>
+									{errors.password?.type === "required" &&
+										"Your Password is required"}
+								</p>
+
+								<button type="button" onClick={() => remove(index)}>
+									X
+								</button>
+							</div>
+						))}
+					</div>
+					<button type="button" onClick={() => append({ number: " " })}>
+						Add Phone
+					</button>
 					<Button
 						variant="contained"
 						sx={{ bgcolor: "secondary.dark" }}
