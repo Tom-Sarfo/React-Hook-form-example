@@ -1,20 +1,19 @@
 import { Box, Button, Container, Stack, TextField } from "@mui/material";
-import { appendErrors, useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
+import { data } from "./Data";
 
 export default function Form() {
 	const {
 		register,
+		control,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			fullName: "",
-			email: "",
-			password: "",
+			userData: data[0],
 		},
 	});
-
-	// console.log("isValid", isValid);
 
 	const submitHandler = (data) => {
 		console.log(data);
@@ -33,37 +32,58 @@ export default function Form() {
 			>
 				<Stack className="stack" spacing={2} direction="column">
 					<TextField
-						{...register("fullName", { required: true })}
+						{...register("userData.fullName", {
+							required: true,
+							// validate: (fieldValue) => {
+							// 	return fieldValue === "Thomas Sarfo" && "Sorry Name is taken";
+							// },
+						})}
 						fullWidth={true}
 						className="Textfield"
 						id="outlined-basic"
 						label="Full Name"
 						variant="outlined"
 					/>
-					<p>
+					{/* <p>
 						{errors.fullName?.type === "required" &&
 							"Your Full Name is required"}
-					</p>
+						{errors.fullName?.type === "validate" && "Sorry Name is taken"}
+					</p> */}
 					<TextField
-						{...register("email", { required: true })}
+						{...register(`userData.email`, { required: "Email required" })}
 						className="Textfield"
 						id="outlined-basic"
 						label="Email Address"
 						variant="outlined"
 					/>
-					<p>{errors.email?.type === "required" && "Your email is required"}</p>
+					{/* <p style={{ color: "red" }}>
+						{errors.email?.type === "required" && "Your email is required"}
+					</p> */}
 
 					<TextField
-						{...register("password", { required: true })}
+						{...register(`userData.password`, { required: true })}
 						className="Textfield"
 						id="outlined-basic"
 						label="Create Password"
 						variant="outlined"
 					/>
+					{/* <TextField
+						{...register("phone.0", {
+							required: true,
+							pattern: {
+								value: /^-?\d*\.?\d+$/,
+								message: "Sorry this is not a number",
+							},
+						})}
+						className="Textfield"
+						id="outlined-basic"
+						label="Enter Phone"
+						variant="outlined"
+					/>
 					<p>
 						{errors.password?.type === "required" &&
 							"Your Password is required"}
-					</p>
+					</p> */}
 					<Button
 						variant="contained"
 						sx={{ bgcolor: "secondary.dark" }}
@@ -73,6 +93,7 @@ export default function Form() {
 					</Button>
 				</Stack>
 			</Box>
+			<DevTool control={control} />
 		</Container>
 	);
 }
